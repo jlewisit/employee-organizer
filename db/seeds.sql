@@ -12,37 +12,37 @@ INSERT INTO department (id, department_name)
 VALUES (03, "Engineering");
 
 
--- -- ROLE --
+-- ROLE --
 
--- INSERT INTO role (id, title, salary, department_id)
--- VALUES (01, "Chief Executive Officer", 500000, 01)
+INSERT INTO role (id, title, salary, department_id)
+VALUES (01, "Chief Executive Officer", 500000, 01);
 
--- INSERT INTO role (id, title, salary, department_id)
--- VALUES (02, "Director of Marketing", 200000, 01)
+INSERT INTO role (id, title, salary, department_id)
+VALUES (02, "Director of Marketing", 200000, 01);
 
--- INSERT INTO role (id, title, salary, department_id)
--- VALUES (03, "Marketing Manager", 120000, 01)
+INSERT INTO role (id, title, salary, department_id)
+VALUES (03, "Marketing Manager", 120000, 01);
 
--- INSERT INTO role (id, title, salary, department_id)
--- VALUES (04, "Marketing Associate", 70000, 01)
+INSERT INTO role (id, title, salary, department_id)
+VALUES (04, "Marketing Associate", 70000, 01);
 
--- INSERT INTO role (id, title, salary, department_id)
--- VALUES (05, "Director of Accounting", 200000, 02)
+INSERT INTO role (id, title, salary, department_id)
+VALUES (05, "Director of Accounting", 200000, 02);
 
--- INSERT INTO role (id, title, salary, department_id)
--- VALUES (06, "Accounting Manager", 120000, 02)
+INSERT INTO role (id, title, salary, department_id)
+VALUES (06, "Accounting Manager", 120000, 02);
 
--- INSERT INTO role (id, title, salary, department_id)
--- VALUES (07, "Accountant", 70000, 02)
+INSERT INTO role (id, title, salary, department_id)
+VALUES (07, "Accountant", 70000, 02);
 
--- INSERT INTO role (id, title, salary, department_id)
--- VALUES (08, "Director of Engineering", 200000, 03)
+INSERT INTO role (id, title, salary, department_id)
+VALUES (08, "Director of Engineering", 200000, 03);
 
--- INSERT INTO role (id, title, salary, department_id)
--- VALUES (09, "Engineering Manager", 120000, 03)
+INSERT INTO role (id, title, salary, department_id)
+VALUES (09, "Engineering Manager", 120000, 03);
 
--- INSERT INTO role (id, title, salary, department_id)
--- VALUES (10, "Engineer", 80000, 03)
+INSERT INTO role (id, title, salary, department_id)
+VALUES (10, "Engineer", 80000, 03);
 
 
 -- EMPLOYEE --
