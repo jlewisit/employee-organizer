@@ -52,7 +52,7 @@ const welcome = () => {
       message: welcomeMessage + '\nYou will be able to access and edit information about employees, roles, and departments. Press ENTER to continue.\n'
     },
   ])
-  .then(startPrompts)
+  .then(startPrompts());
 };
 
 // Populate menu choices to see what user wants to do
