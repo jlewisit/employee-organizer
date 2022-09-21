@@ -38,13 +38,18 @@ const departmentArray = () => {
   return departments;
 };
 
+// WELCOME
+const welcomeMessage = `WELCOME TO EMPLOYEE ORGANIZER\n`;
+const error = `\r\n>> ERR: `;
+const noInfoEntered = `No information was entered`;
+
 const welcome = () => {
   return inquirer
   .prompt([
     {
       type: 'input',
       name: 'welcome',
-      message: welcomeMsg + '\nYou will be able to access and edit information about employees, roles, and departments. Press ENTER to continue.\n'
+      message: welcomeMessage + '\nYou will be able to access and edit information about employees, roles, and departments. Press ENTER to continue.\n'
     },
   ])
   .then(startPrompts)
@@ -204,3 +209,172 @@ insertNewEmployee();
       });
     };
 
+    const addRole = () => {
+      return inquirer
+      .prompt([
+        {
+          name: 'title',
+          type: 'input',
+          message: 'Input new ROLE (title).',
+          validate: title => {
+            if (title) {
+              return true;
+              } else {
+                console.log (error + noInfoEntered + `Please enter a new ROLE (title).`);
+                return false;
+              }
+          },
+        },
+        {
+          name: 'salary',
+          type: 'input',
+          message: ({title}) => `Input the ${title} SALARY.`,
+          validate: salary => {
+            if (salary) {
+              return true;
+            } else {
+              ({title}) => console.log (error + noInfoEntered + `Please enter the ${title} SALARY.`);
+              return false;
+            }
+          },
+        },
+        {
+          name: 'department',
+          type: 'input',
+          message: ({title}) => `Input ${title} DEPARTMENT.`,
+        choices: departmentArray()
+      },
+    ])
+    .then((answers) => {
+      let departmentID = departmentArray().indexOf(val.department) +1
+      connection.query('INSERT INTO role SET ?',
+    {
+      title: answers.title,
+      salary: answers.salary,
+      department_id: departmentID
+    },
+    (err, res) => {
+      if(err) throw err;
+      console.log(`${res.affectedRows} The Role has been added.\n`);
+      startPrompts();
+    }
+    );
+    connection.end;
+    })
+    };
+    
+    const addDepartment = () => {
+      return inquirer
+      .prompt([
+        {
+          name: 'departmentName',
+          type: 'input',
+          message: 'Input new DEPARTMENT NAME.',
+          validate: departmentName => {
+            if (departmentName) {
+              return true;
+            } else {
+              console.log (error + noInfoEntered + `Please enter a new DEPARTMENT NAME.`);
+              return false;
+            }
+          },
+        },
+      ])
+      .then((answers) => {
+        const query = 'INSERT INTO department SET ?';
+        connection.query(query, [
+          {
+            department_name: answers.departmentName,
+          },
+        ],
+        (err, res) => {
+          if (err) throw err;
+        },
+        console.log(`${res.affectedRows} The Department has been added\n`)
+        );
+        connection.end;
+      })
+    };
+          
+    // READ (view)
+    function viewEmployees() {
+      let query = `SELECT employee.first_name, employee.last_name, role.title, role.salary, department.department_name`;
+      query += `CONCAT (e.first_name, ' ', e.last_name) AS Manager`;
+      query += `FROM employee`;
+      query += `INNER JOIN role ON role.id = employee.role_id INNER JOIN department ON department.id - role.department_id`;
+      query += `LEFT JOIN employee e ON employee.manager_id = e.id`;
+      query =+ `ORDER BY last_name ASC`;
+      connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        connection.end;
+      })
+      startPrompts()
+    }
+    
+    const viewRoles = () => {
+      let query = `SELECT * FROM roles`;
+      query += `INNER JOIN department ON role.department_id = department.id`;
+      query += `ORDER BY title`;
+      connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        connection.end;
+      })
+      startPrompts()
+    }
+    
+    const viewDepartments = () => {
+      let query = `SELECT * FROM departments`;
+      query += `ORDER BY department_name`;
+      connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.table(res);
+        connection.end;
+      })
+      startPrompts()
+    }
+    
+    // UPDATE
+    const updateEmployeeRole = () => {
+      return inquirer
+      .prompt([
+        {
+          name: 'employee',
+          type: 'input',
+          message: `Select the employee whose ROLE you would like to UPDATE.`,
+          choices: employeeArray()
+        },
+        {
+          name: 'role',
+          type: 'input',
+          message: ({employee}) => `Input ${employee} ROLE.`,
+          choices: roleArray()
+        },
+      ])
+      .then(answers => {
+        const roleID = roleArray().indexOf(val.role) +1
+        const managerID = employeeArray().indexOf(val.employee) +1
+        connection.query(
+          'INSERT INTO employees SET ?',
+          {
+            first_name: answers.first_name,
+            last_name: answers.last_name,
+            manager_id: managerID,
+            role_id: roleID
+          },
+          (err, res) => {
+            if (err) throw err;
+            console.log(`${res.affectedRows} The Employee has been added.\n`);
+          }
+        );
+        connection.end;
+      }),
+      startPrompts()
+    };
+    
+    // Function to initialize app
+    const init = () => welcome()
+    
+    // Initialize
+    init();
