@@ -1,4 +1,4 @@
-USE employee_organizerDB;
+USE employee_organizer_db;
 
 -- DEPARTMENT --
 
