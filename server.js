@@ -40,7 +40,7 @@ const departmentArray = () => {
 
 // Populate menu choices to see what user wants to do
 // Call appropriate function based on user's choice
-const startPrompts = async () => {
+const initiatePrompts = async () => {
   return await inquirer.prompt([
     {
       name: 'action',
@@ -170,7 +170,7 @@ findManagerID();
 console.log("ROLE-ID Added before insert query", roleID);
 console.log("MANAGER-ID Added before insert query", managerID);
 
-const insertNewEmployee = async () => {
+const addNewEmployee = async () => {
   const mySQLConnection = await connection.query('INSERT INTO employee SET ?',
   {
     first_name: answers.first_name,
@@ -182,12 +182,12 @@ const insertNewEmployee = async () => {
     if(err) throw err;
     console.log("INSERT RES", res);
     console.log(`${answers.first_name} ${answers.last_name} was added. \n`);
-    startPrompts();
+    initiatePrompts();
   }
   );
   // connection.end
 }
-insertNewEmployee();
+addNewEmployee();
       });
     };
 
@@ -238,7 +238,7 @@ insertNewEmployee();
     (err, res) => {
       if(err) throw err;
       console.log(`${res.affectedRows} The Role has been added.\n`);
-      startPrompts();
+      initiatePrompts();
     }
     );
     connection.end;
@@ -291,7 +291,7 @@ insertNewEmployee();
         console.table(res);
         connection.end;
       })
-      startPrompts()
+      initiatePrompts()
     }
     
     const viewRoles = () => {
@@ -303,7 +303,7 @@ insertNewEmployee();
         console.table(res);
         connection.end;
       })
-      startPrompts()
+      initiatePrompts()
     }
     
     const viewDepartments = () => {
@@ -314,7 +314,7 @@ insertNewEmployee();
         console.table(res);
         connection.end;
       })
-      startPrompts()
+      initiatePrompts()
     }
     
     // UPDATE
@@ -352,9 +352,9 @@ insertNewEmployee();
         );
         connection.end;
       }),
-      startPrompts()
+      initiatePrompts()
     };
     
   
-    // Initialize
-startPrompts();
+    // Start
+initiatePrompts();
