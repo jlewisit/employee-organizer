@@ -38,23 +38,6 @@ const departmentArray = () => {
   return departments;
 };
 
-// WELCOME
-const welcomeMessage = `WELCOME TO EMPLOYEE ORGANIZER\n`;
-const error = `\r\n>> ERR: `;
-const noInfoEntered = `No information was entered`;
-
-const welcome = () => {
-  return inquirer
-  .prompt([
-    {
-      type: 'input',
-      name: 'welcome',
-      message: welcomeMessage + '\nYou will be able to access and edit information about employees, roles, and departments. Press ENTER to continue.\n'
-    },
-  ])
-  .then(startPrompts());
-};
-
 // Populate menu choices to see what user wants to do
 // Call appropriate function based on user's choice
 const startPrompts = async () => {
@@ -298,11 +281,11 @@ insertNewEmployee();
     // READ (view)
     function viewEmployees() {
       let query = `SELECT employee.first_name, employee.last_name, role.title, role.salary, department.department_name`;
-      query += `CONCAT (e.first_name, ' ', e.last_name) AS Manager`;
+      query += `CONCAT (employee.first_name, ' ', employee.last_name) AS Manager`;
       query += `FROM employee`;
       query += `INNER JOIN role ON role.id = employee.role_id INNER JOIN department ON department.id - role.department_id`;
-      query += `LEFT JOIN employee e ON employee.manager_id = e.id`;
-      query =+ `ORDER BY last_name ASC`;
+      query += `LEFT JOIN employee ON employee.manager_id = employee.id`;
+      query += `ORDER BY last_name ASC`;
       connection.query(query, (err, res) => {
         if (err) throw err;
         console.table(res);
@@ -372,9 +355,6 @@ insertNewEmployee();
       startPrompts()
     };
     
-    // // Function to initialize app
-    // const init = () => welcome()
-    
-    // // Initialize
-    // init()
-    welcome()
+  
+    // Initialize
+startPrompts();
