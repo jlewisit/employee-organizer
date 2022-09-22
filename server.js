@@ -377,4 +377,4 @@ insertNewEmployee();
     
     // // Initialize
     // init()
-    // welcome()
+    welcome()
