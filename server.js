@@ -61,7 +61,7 @@ const startPrompts = async () => {
   return await inquirer.prompt([
     {
       name: 'action',
-      type: 'rawlist',
+      type: 'list',
       message: 'What would you like to do?',
       choices: [
         'EMPLOYEES: View All',
@@ -372,8 +372,9 @@ insertNewEmployee();
       startPrompts()
     };
     
-    // Function to initialize app
-    const init = () => welcome()
+    // // Function to initialize app
+    // const init = () => welcome()
     
-    // Initialize
-    init();
+    // // Initialize
+    // init()
+    // welcome()
