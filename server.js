@@ -58,8 +58,7 @@ const welcome = () => {
 // Populate menu choices to see what user wants to do
 // Call appropriate function based on user's choice
 const startPrompts = async () => {
-  return await inquirer
-  .prompt([
+  return await inquirer.prompt([
     {
       name: 'action',
       type: 'rawlist',
